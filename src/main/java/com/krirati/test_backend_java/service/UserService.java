@@ -50,4 +50,38 @@ public class UserService {
             throw new DataNotFoundException("userId not found");
         }
     }
+
+    public User updateUserByID(int userId, UserRequest request) {
+        Optional<User> result = mockUserData.stream()
+                .filter(user -> user.getId() == userId)
+                .findFirst();
+        if (result.isPresent()) {
+            User newUser = result.get();
+            newUser.setName(request.getName());
+            newUser.setEmail(request.getEmail());
+            newUser.setUsername(request.getUsername());
+
+            if (request.getPhone() != null) {
+                newUser.setPhone(request.getPhone());
+            }
+            if (request.getWebsite() != null) {
+                newUser.setWebsite(request.getWebsite());
+            }
+            return newUser;
+        } else {
+            throw new DataNotFoundException("userId not found");
+        }
+    }
+
+    public List<User> deleteUserByID(int userId) {
+        Optional<User> result = mockUserData.stream()
+                .filter(user -> user.getId() == userId)
+                .findFirst();
+        if (result.isPresent()) {
+            mockUserData.remove(result.get());
+            return mockUserData;
+        } else {
+            throw new DataNotFoundException("userId not found");
+        }
+    }
 }
