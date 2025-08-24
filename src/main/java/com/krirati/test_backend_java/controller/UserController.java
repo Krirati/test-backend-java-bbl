@@ -28,8 +28,9 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public void fetchUserById() {
-
+    public ResponseEntity<User> fetchUserById(@PathVariable("userId") int userId) {
+        User user = userService.fetchUserByID(userId);
+        return ResponseEntity.ok(user);
     }
 
     @PostMapping("")
